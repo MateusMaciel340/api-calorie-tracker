@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+const routes = require("./routes");
+
 const dotenv = require("dotenv").config();
 const cors = require("cors");
 const dayjs = require("dayjs");
@@ -8,7 +10,7 @@ const utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 
 app.use(
-    express.json(), cors(), express.urlencoded({ extended: true })
+    express.json(), cors(), express.urlencoded({ extended: true }), routes
 );
 
 app.all("*", (req, res) => {
