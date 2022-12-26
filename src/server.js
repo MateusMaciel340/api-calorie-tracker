@@ -3,6 +3,10 @@ const app = express();
 
 const routes = require("./routes");
 
+// Swagger
+const swaggerFile = require("./swagger/swagger.json");
+const swaggerUi = require("swagger-ui-express");
+
 const dotenv = require("dotenv").config();
 const cors = require("cors");
 const dayjs = require("dayjs");
@@ -10,8 +14,14 @@ const utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 
 app.use(
-    express.json(), cors(), express.urlencoded({ extended: true }), routes
+    express.json(), cors(), express.urlencoded({ extended: true })
 );
+
+app.use(
+    "/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile)
+);
+
+app.use("/api", routes);
 
 app.all("*", (req, res) => {
     res.status(400).json("Not found!");
