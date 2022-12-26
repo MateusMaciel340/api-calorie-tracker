@@ -2,7 +2,7 @@ const dbConfig = require("../configs/db.config");
 const { Pool } = require("pg");
 const pool = new Pool(dbConfig);
 
-const types = require("pg").types();
+const types = require("pg").types;
 
 types.setTypeParser(20, function (val) {
     return parseInt(val, 10);
